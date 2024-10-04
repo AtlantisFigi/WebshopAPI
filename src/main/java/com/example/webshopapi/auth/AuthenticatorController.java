@@ -2,11 +2,9 @@ package com.example.webshopapi.auth;
 
 import com.example.webshopapi.user.UserRegistrationDTO;
 import com.example.webshopapi.user.UserService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.antlr.v4.runtime.Token;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,15 +37,21 @@ public class AuthenticatorController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         String token = userService.authenticateUser(authRequest);
+
         if (token != null) {
-            Cookie cookie = new Cookie("JWT", token);
-            cookie.setHttpOnly(true);
-            cookie.setPath("/");
-            cookie.setMaxAge(3600);
-            response.addCookie(cookie);
-            return ResponseEntity.ok().build();
+            ResponseCookie cookie = ResponseCookie.from("JWT", token)
+                    .httpOnly(true)
+                    .path("/")
+                    .maxAge(3600)
+                    .sameSite("Lax")
+                    .secure(false)
+                .build();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

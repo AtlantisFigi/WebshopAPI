@@ -8,6 +8,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final RoleService roleService;
     private final JwtTokenService jwtTokenService;
     private final AuthenticationManager authenticationManager;
 
@@ -31,7 +34,9 @@ public class UserServiceImpl implements UserService {
         user.setPrefix(userRegistrationDTO.prefix());
         user.setEmail(userRegistrationDTO.email());
         user.setPasswordHash(passwordEncoder.encode(userRegistrationDTO.password()));
-        user.setRole(Role.User);
+
+        Role role = roleService.findByName("user");
+        user.setRole(role);
 
         userRepository.save(user);
         return true;
@@ -48,8 +53,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByEmail(authRequest.email()).orElse(null);
         if (user != null) {
-            System.out.println(jwtTokenService.generateToken(user.getEmail(), user.getRole().toString()));
-            return jwtTokenService.generateToken(user.getEmail(), user.getRole().toString());
+            return jwtTokenService.generateToken(user.getEmail(), user.getRole().getName());
         }
 
         return null;

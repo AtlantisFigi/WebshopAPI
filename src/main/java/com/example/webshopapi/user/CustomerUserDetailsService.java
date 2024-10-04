@@ -1,12 +1,14 @@
 package com.example.webshopapi.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,7 +32,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.get().getEmail(),
                 user.get().getPasswordHash(),
-                new ArrayList<>()
+                List.of(new SimpleGrantedAuthority(user.get().getRole().toString()))
         );
     }
 }
