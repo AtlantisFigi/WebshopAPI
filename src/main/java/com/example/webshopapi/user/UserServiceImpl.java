@@ -1,14 +1,14 @@
 package com.example.webshopapi.user;
 
 import com.example.webshopapi.auth.AuthRequest;
+import com.example.webshopapi.auth.AuthResponse;
 import com.example.webshopapi.auth.JwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -16,11 +16,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     private final RoleService roleService;
     private final JwtTokenService jwtTokenService;
-    private final AuthenticationManager authenticationManager;
 
     @Override
     public boolean registerUser(UserRegistrationDTO userRegistrationDTO) {
@@ -43,17 +42,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String authenticateUser(AuthRequest authRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authRequest.email(),
-                        authRequest.password()
-                )
-        );
-
+    public AuthResponse authenticateUser(AuthRequest authRequest) {
         User user = userRepository.findByEmail(authRequest.email()).orElse(null);
         if (user != null) {
-            return jwtTokenService.generateToken(user.getEmail(), user.getRole().getName());
+            return new AuthResponse(
+                    jwtTokenService.generateToken(user.getEmail(), user.getRole().getName()),
+                    new UserResponseDto(
+                            user.getFirstName(),
+                            user.getLastName(),
+                            user.getPrefix(),
+                            user.getEmail()
+                    ));
         }
 
         return null;

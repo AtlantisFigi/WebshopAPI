@@ -5,7 +5,6 @@ import com.example.webshopapi.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.antlr.v4.runtime.Token;
 import org.springframework.http.*;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,17 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticatorController {
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenService jwtTokenService;
 
     public AuthenticatorController(
-            UserService userService,
-            AuthenticationManager authenticationManager,
-            JwtTokenService jwtTokenService
+            UserService userService
     ) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenService = jwtTokenService;
     }
 
     @PostMapping("/register")
@@ -38,10 +31,11 @@ public class AuthenticatorController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
-        String token = userService.authenticateUser(authRequest);
+        AuthResponse authResponse = userService.authenticateUser(authRequest);
 
-        if (token != null) {
-            ResponseCookie cookie = ResponseCookie.from("JWT", token)
+
+        if (authResponse.token() != null) {
+            ResponseCookie cookie = ResponseCookie.from("JWT", authResponse.token())
                     .httpOnly(true)
                     .path("/")
                     .maxAge(3600)
@@ -51,7 +45,8 @@ public class AuthenticatorController {
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                    .build();
+                    .body(authResponse.userDto());
+
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
