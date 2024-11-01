@@ -1,5 +1,6 @@
 package com.example.webshopapi.auth;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,8 @@ public class JwtTokenService {
                 .compact();
     }
 
-    public boolean validateToken(String token, String email) {
-        String tokenEmail = getUsernameFromToken(token);
-        return (isValidToken(token) && tokenEmail.equals(email) && !isTokenExpired(token));
+    public boolean validateToken(String token) {
+        return (isValidToken(token) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
@@ -44,13 +44,22 @@ public class JwtTokenService {
                 .before(new Date());
     }
 
-    private String getUsernameFromToken(String token) {
+    public String getUsernameFromToken(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    public String getRoleFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.get("role", String.class);
     }
 
     private boolean isValidToken(String token) {
