@@ -1,5 +1,6 @@
 package com.example.webshopapi.product;
 
+import com.example.webshopapi.exceptions.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,16 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<ProductDTO> findAll() {
+        return productRepository.findAll().stream()
+                .map(this::convertToProductDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public ProductDTO findById(int id) {
         Product product = productRepository.findById((long) id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         return convertToProductDTO(product);
     }
