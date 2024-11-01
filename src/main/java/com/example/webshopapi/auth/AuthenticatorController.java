@@ -2,8 +2,6 @@ package com.example.webshopapi.auth;
 
 import com.example.webshopapi.user.UserRegistrationDTO;
 import com.example.webshopapi.user.UserService;
-import jakarta.servlet.http.HttpServletResponse;
-import org.antlr.v4.runtime.Token;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +11,7 @@ public class AuthenticatorController {
 
     private final UserService userService;
 
-    public AuthenticatorController(
-            UserService userService
-    ) {
+    public AuthenticatorController(UserService userService) {
         this.userService = userService;
     }
 
@@ -50,5 +46,20 @@ public class AuthenticatorController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        ResponseCookie jwtCookie = ResponseCookie.from("JWT", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Lax")
+                .build();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .build();
     }
 }
