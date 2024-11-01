@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Lint Java code with GitHub Super Linter
-        uses: github/super-linter@v3
+        uses: super-linter/super-linter@v7.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LANGUAGE: java
