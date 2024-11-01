@@ -16,6 +16,9 @@ public class JwtTokenService {
 
     public JwtTokenService() {
         String base64SecretKey = System.getenv("SECRET_KEY");
+        if (base64SecretKey == null) {
+            throw new IllegalArgumentException("Secret key cannot be null");
+        }
         byte[] keyBytes = Base64.getDecoder().decode(base64SecretKey);
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
