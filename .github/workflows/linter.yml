@@ -1,17 +1,22 @@
-name: Lint Java Code
+name: Java CI with Checkstyle
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Lint Java code with GitHub Super Linter
-        uses: super-linter/super-linter@v7.1.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LANGUAGE: java
-          CHECKSTYLE_CONFIG: checkstyle.xml 
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'  # Geef hier de versie van de JDK op die je gebruikt.
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Run Checkstyle
+        run: mvn checkstyle:check
