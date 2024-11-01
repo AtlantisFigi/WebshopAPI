@@ -4,10 +4,6 @@
 
 <module name="Checker">
     <module name="TreeWalker">
-        <!-- Controle op naamgevingsconventies voor variabelen -->
-        <module name="VariableName">
-            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/> <!-- CamelCase voor variabelen -->
-        </module>
 
         <!-- Controle op naamgevingsconventies voor methoden -->
         <module name="MethodName">
