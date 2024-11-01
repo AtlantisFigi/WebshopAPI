@@ -1,26 +1,16 @@
-name: CI Pipeline
+name: Lint Java Code
 
-on:
-  push:
-    branches:
-      - master
-      - Dev
-  pull_request:
-    branches:
-      - master
-      - Dev
+on: [push, pull_request]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Super-Linter
-        uses: super-linter/super-linter@v7.1.0    
+      - name: Lint Java code with GitHub Super Linter
+        uses: github/super-linter@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
-          CHECKSTYLE_CONFIG_FILE: checkstyle.xml
+          LANGUAGE: java
