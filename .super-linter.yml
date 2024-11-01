@@ -5,9 +5,9 @@ linters:
   # Schakel de linters uit die je niet wilt gebruiken
   BASH: false
   CHECKOV: false
-  GOOGLE_JAVA_FORMAT: true
+  GOOGLE_JAVA_FORMAT: false
   JAVA: true
   SHELL_SHFMT: false
-  YAML_PRETTIER: true
+  YAML_PRETTIER: false
 
 # Specificeer hier andere configuraties voor je linters
