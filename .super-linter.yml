@@ -1,7 +1,0 @@
-linters:
-  BASH: false
-  CHECKOV: false
-  GOOGLE_JAVA_FORMAT: false
-  JAVA: true
-  SHELL_SHFMT: false
-  YAML_PRETTIER: false
