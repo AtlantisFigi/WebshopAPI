@@ -21,9 +21,7 @@ jobs:
          SECRET_KEY: ${{ secrets.SECRET_KEY }}
          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
          run: |
-          echo "Starting Maven build..."
-          echo "Using secret key: $SECRET_KEY" 
-          echo "Using database password: $DB_PASSWORD"
+          echo "$SECRET_KEY" 
           mvn -X clean verify
 
       - name: Run Checkstyle
