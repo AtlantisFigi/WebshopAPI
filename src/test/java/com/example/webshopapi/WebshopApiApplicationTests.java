@@ -6,7 +6,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+@ActiveProfiles("test")
+//@TestPropertySource(locations = "classpath:application-test.properties")
 class WebshopApiApplicationTests {
 
     @Test
