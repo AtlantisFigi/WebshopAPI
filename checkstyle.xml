@@ -7,13 +7,7 @@
 
     <property name="severity" value="error"/>
     <property name="fileExtensions" value="java, properties, xml"/>
-
-    <module name="SuppressionFilter">
-        <suppress checks="HideUtilityClassConstructor"
-                  files="src/main/java/com/example/webshopapi/WebshopApiApplication.java"/>
-    </module>
-
-
+    
     <!-- Excludes all 'module-info.java' files              -->
     <!-- See https://checkstyle.org/filefilters/index.html -->
     <module name="BeforeExecutionExclusionFileFilter">
