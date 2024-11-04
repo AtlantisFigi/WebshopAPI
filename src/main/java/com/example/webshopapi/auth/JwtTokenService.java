@@ -15,7 +15,7 @@ public class JwtTokenService {
     private final SecretKey secretKey;
     private final long jwtExpiration = 3600000;
 
-    public JwtTokenService(@Value("${SECRET_KEY}") String base64SecretKey) {
+    public JwtTokenService(@Value("${secret.jwt}") String base64SecretKey) {
         if (base64SecretKey == null) {
             throw new IllegalArgumentException("Secret key cannot be null");
         }
