@@ -3,6 +3,7 @@ package com.example.webshopapi.auth;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -14,8 +15,7 @@ public class JwtTokenService {
     private final SecretKey secretKey;
     private final long jwtExpiration = 3600000;
 
-    public JwtTokenService() {
-        String base64SecretKey = System.getenv("SECRET_KEY");
+    public JwtTokenService(@Value("${jwt.secret}") String base64SecretKey) {
         if (base64SecretKey == null) {
             throw new IllegalArgumentException("Secret key cannot be null");
         }
