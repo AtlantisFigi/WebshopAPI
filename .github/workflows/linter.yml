@@ -14,6 +14,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '22'  # Specificeren van JDK 22
+          distribution: 'temurin'
 
       - name: Build with Maven
         env: 
