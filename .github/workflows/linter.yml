@@ -17,6 +17,8 @@ jobs:
           distribution: 'temurin'  # Gebruik 'temurin' voor OpenJDK 22
 
       - name: Build with Maven
+        env: 
+         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: mvn clean install
 
       - name: Run Checkstyle
