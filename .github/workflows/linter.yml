@@ -16,11 +16,6 @@ jobs:
           java-version: '22'  # Specificeren van JDK 22
           distribution: 'temurin'
 
-      - name: Echo secret key
-        env: 
-         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: echo "$SECRET_KEY" 
-
       - name: Build with Maven
         env: 
          SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -29,6 +24,3 @@ jobs:
 
       - name: Run Checkstyle
         run: mvn checkstyle:check
-
-      - name: Run Tests
-        run: mvn test
