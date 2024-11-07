@@ -49,7 +49,9 @@ jobs:
         run: |
           docker push jonaseveraard/webshopapi:latest
 
-
+      - name: Start API container
+        run: |
+         docker run -d --name webshopapi -p 8080:8080 jonaseveraard/webshopapi:latest
 
       - name: Wait for API to be ready with wait-for-it
         run: |
