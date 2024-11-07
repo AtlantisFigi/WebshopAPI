@@ -49,8 +49,18 @@ jobs:
         run: |
           docker push jonaseveraard/webshopapi:latest
 
+      - name: Start API container
+        run: |
+         docker run -d --name webshopapi -p 8080:8080 jonaseveraard/webshopapi:latest
+
+      - name: Wait for API to be ready
+        run: |
+         until $(curl --output /dev/null --silent --head --fail http://localhost:8080/api/health); do
+         printf '.'
+         sleep 5
+         done
+
       - name: Run Load Test with k6
         uses: docker://grafana/k6:latest
         with:
           args: run ./tests/loadtest.js
-
