@@ -56,8 +56,8 @@ jobs:
       - name: Wait for API to be ready
         run: |
          until $(curl --output /dev/null --silent --head --fail http://localhost:8080/api/health); do
-         printf '.'
-         sleep 5
+          printf '.'
+          sleep 5
          done
 
       - name: Run Load Test with k6
