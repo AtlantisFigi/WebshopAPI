@@ -53,12 +53,11 @@ jobs:
         run: |
          docker run -d --name webshopapi -p 8080:8080 jonaseveraard/webshopapi:latest
 
-      - name: Wait for API to be ready
+      - name: Wait for API to be ready with wait-for-it
         run: |
-         until $(curl --output /dev/null --silent --head --fail http://localhost:8080/api/health); do
-          printf '.'
-          sleep 5
-         done
+          wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+          chmod +x wait-for-it.sh
+          ./wait-for-it.sh localhost:8080 --timeout=60 --strict -- echo "API is up and running!"        
 
       - name: Run Load Test with k6
         uses: docker://grafana/k6:latest
