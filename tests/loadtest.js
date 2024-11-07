@@ -4,13 +4,11 @@ import SharedArray from 'k6/data';
 
 const BASE_URL = 'http://localhost:8080/api';
 
-const users = new SharedArray('users', function () {
-    return [
+const users = [
         { username: 'user1', password: 'password123' },
         { username: 'user2', password: 'password123' },
         { username: 'user3', password: 'password123' },
-    ];
-});
+];
 
 export let options = {
     vus: 50,
