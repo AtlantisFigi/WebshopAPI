@@ -37,7 +37,7 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag webshop-api:latest jonaseveraard/webshopapi:latest
+          docker tag webshopapi:latest jonaseveraard/webshopapi:latest
 
       - name: Push Docker image to Docker Hub
         run: |
