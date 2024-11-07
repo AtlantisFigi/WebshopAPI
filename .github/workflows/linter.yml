@@ -48,3 +48,9 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push jonaseveraard/webshopapi:latest
+
+      - name: Run Load Test with k6
+        uses: docker://grafana/k6:latest
+        with:
+          args: run ./tests/loadtest.js
+
