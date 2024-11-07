@@ -35,6 +35,12 @@ jobs:
         run: |
           docker build -t webshopapi .
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Tag Docker image
         run: |
           docker tag webshopapi:latest jonaseveraard/webshopapi:latest
