@@ -1,6 +1,12 @@
 name: Java CI with Checkstyle
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master 
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -13,7 +19,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '22'  # Specificeren van JDK 22
+          java-version: '22' 
           distribution: 'temurin'
 
       - name: Build with Maven
@@ -24,3 +30,7 @@ jobs:
 
       - name: Run Checkstyle
         run: mvn checkstyle:check
+
+      - name: Build Docker image
+        run: |
+          docker build -t webshop-api .
