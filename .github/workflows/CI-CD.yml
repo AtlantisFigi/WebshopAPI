@@ -19,10 +19,17 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'  # Specify your Java version
+          java-version: '22'
+          distribution: 'temurin'
 
-      - name: Run tests with Maven
-        run: mvn test  # Assuming you're using Maven to run tests
+      - name: Build with Maven
+        env: 
+         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: mvn -B clean verify
+
+      - name: Run Checkstyle
+        run: mvn checkstyle:check
 
   # CD job: Build Docker image, push it, and deploy
   deploy:
@@ -49,13 +56,3 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push jonaseveraard/webshopapi:latest
-
-      - name: Start API container
-        run: |
-          docker run -d --name webshopapi -p 8080:8080 jonaseveraard/webshopapi:latest
-
-      - name: Wait for API to be ready with wait-for-it
-        run: |
-          wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
-          chmod +x wait-for-it.sh
-          ./wait-for-it.sh localhost:8080 --timeout=60 --strict -- echo "API is up and running!"
