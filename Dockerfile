@@ -1,5 +1,5 @@
 # Build stage
-FROM maven:3.9.9-openjdk-22-slim AS build
+FROM maven:3.9.9-amazoncorretto-21 AS build
 WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline # Cache dependencies
