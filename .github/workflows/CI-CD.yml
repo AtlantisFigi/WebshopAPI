@@ -1,16 +1,33 @@
-name: Java CI with Docker
+name: Java CI/CD with Docker
 
 on:
   push:
     branches:
-      - master  # Trigger op push naar de master branch
+      - master  # Trigger on push to master branch
   pull_request:
     branches:
-      - master  # Trigger op pull request naar master branch
+      - master  # Trigger on pull request to master branch
 
 jobs:
-  build:
+  # CI job: Run tests on the code
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'  # Specify your Java version
+
+      - name: Run tests with Maven
+        run: mvn test  # Assuming you're using Maven to run tests
+
+  # CD job: Build Docker image, push it, and deploy
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # This job waits for the test job to complete
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -28,31 +45,6 @@ jobs:
       - name: Tag Docker image
         run: |
           docker tag webshopapi:latest jonaseveraard/webshopapi:latest
-
-  test:
-    runs-on: ubuntu-latest
-    needs: build  # Deze job wacht op de build job
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run Load Test with k6
-        uses: docker://grafana/k6:latest
-        with:
-          args: run ./tests/loadtest.js
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test  # Deze job wacht op de test job
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image to Docker Hub
         run: |
