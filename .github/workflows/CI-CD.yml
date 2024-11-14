@@ -10,7 +10,7 @@ on:
 
 jobs:
   # CI job: Run tests on the code
-  test:
+  CI:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,7 +32,7 @@ jobs:
         run: mvn checkstyle:check
 
   # CD job: Build Docker image, push it, and deploy
-  deploy:
+  CD:
     runs-on: ubuntu-latest
     needs: test  # This job waits for the test job to complete
     steps:
