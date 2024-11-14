@@ -7,7 +7,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM openjdk:22-jdk-slim  # JRE instead of JDK for runtime
+FROM openjdk:22-jdk-slim
 WORKDIR /app
 EXPOSE 8080
 COPY --from=build /app/target/WebshopAPI-0.0.1-SNAPSHOT.jar app.jar
