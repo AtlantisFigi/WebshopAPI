@@ -22,14 +22,14 @@ jobs:
           java-version: '22'
           distribution: 'temurin'
 
+      - name: Run Checkstyle
+        run: mvn -X checkstyle:check
+
       - name: Build with Maven
         env: 
          SECRET_KEY: ${{ secrets.SECRET_KEY }}
          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: mvn -B clean verify
-
-      - name: Run Checkstyle
-        run: mvn checkstyle:check
 
   # CD job: Build Docker image, push it, and deploy
   CD:
