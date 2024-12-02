@@ -1,7 +1,9 @@
-package com.example.webshopapi.auth;
+package com.example.webshopapi.controllers;
 
-import com.example.webshopapi.user.UserRegistrationDTO;
-import com.example.webshopapi.user.UserService;
+import com.example.webshopapi.dataTransferObjects.AuthRequest;
+import com.example.webshopapi.dataTransferObjects.AuthResponse;
+import com.example.webshopapi.dataTransferObjects.UserRegistrationDTO;
+import com.example.webshopapi.services.UserService;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.example.webshopapi.product;
+package com.example.webshopapi.dataTransferObjects;
 
 import java.util.List;
 
@@ -7,7 +7,8 @@ public record ProductDTO(
         String name,
         String description,
         double price,
-        List<String> images
+        List<String> categories,
+        int quantity
 ) {
 
 }

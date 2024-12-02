@@ -1,6 +1,4 @@
-package com.example.webshopapi.auth;
-
-import com.example.webshopapi.user.UserResponseDto;
+package com.example.webshopapi.dataTransferObjects;
 
 public record AuthResponse(
         String token,

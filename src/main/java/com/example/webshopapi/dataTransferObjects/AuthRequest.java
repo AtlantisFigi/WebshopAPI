@@ -1,4 +1,4 @@
-package com.example.webshopapi.auth;
+package com.example.webshopapi.dataTransferObjects;
 
 public record AuthRequest(
         String email,

@@ -1,4 +1,4 @@
-package com.example.webshopapi.user;
+package com.example.webshopapi.dataTransferObjects;
 
 public record UserRegistrationDTO(
         String firstName,

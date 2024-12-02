@@ -1,4 +1,4 @@
-package com.example.webshopapi.auth;
+package com.example.webshopapi.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,7 +15,7 @@ public class JwtTokenService {
     private final SecretKey secretKey;
     private final long jwtExpiration = 3600000;
 
-    public JwtTokenService(@Value("${secret.jwt}") String base64SecretKey) {
+    public JwtTokenService(@Value("${jwt.secret}") String base64SecretKey) {
         if (base64SecretKey == null) {
             throw new IllegalArgumentException("Secret key cannot be null");
         }

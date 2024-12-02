@@ -1,4 +1,4 @@
-package com.example.webshopapi.product;
+package com.example.webshopapi.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,8 +24,8 @@ public class Product {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Image> images;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
     @ManyToMany
     @JoinTable(
