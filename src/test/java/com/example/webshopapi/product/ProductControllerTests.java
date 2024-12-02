@@ -84,8 +84,8 @@ public class ProductControllerTests {
     void testSearchProduct_ProductsFound() throws Exception {
         // Arrange
         List<ProductDTO> productList = new ArrayList<>();
-        productList.add(new ProductDTO(1, "Product1", "Description1", 100.0, Collections.emptyList(), Collections.emptyList(), 10));
-        productList.add(new ProductDTO(2, "Product2", "Description2", 150.0, Collections.emptyList(), Collections.emptyList(), 20));
+        productList.add(new ProductDTO(1, "Product1", "Description1", 100.0, Collections.emptyList(), 10));
+        productList.add(new ProductDTO(2, "Product2", "Description2", 150.0, Collections.emptyList(), 20));
 
         SearchCriteria criteria = new SearchCriteria("Product", Collections.singletonList("Category1"), 0, 1000);
         when(productService.findBySearchCriteria(any())).thenReturn(productList);

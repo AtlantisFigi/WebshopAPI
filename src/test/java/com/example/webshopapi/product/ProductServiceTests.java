@@ -37,16 +37,16 @@ public class ProductServiceTests {
         product1.setName("Product 1");
         product1.setDescription("Description 1");
         product1.setPrice(10.0);
-        product1.setImages(new ArrayList<>());
         product1.setCategories(new ArrayList<>());
+        product1.setQuantity(10);
 
         Product product2 = new Product();
         product2.setId(2);
         product2.setName("Product 2");
         product2.setDescription("Description 2");
         product2.setPrice(15.0);
-        product2.setImages(new ArrayList<>());
         product2.setCategories(new ArrayList<>());
+        product2.setQuantity(20);
 
         List<Product> products = List.of(product1, product2);
         when(productRepository.findAll()).thenReturn(products);
@@ -85,8 +85,8 @@ public class ProductServiceTests {
         product.setName("Product 1");
         product.setDescription("Description 1");
         product.setPrice(10.0);
-        product.setImages(new ArrayList<>());
         product.setCategories(new ArrayList<>());
+        product.setQuantity(10);
 
         when(productRepository.findById(1L)).thenReturn(java.util.Optional.of(product));
 
@@ -119,5 +119,6 @@ public class ProductServiceTests {
         assertEquals(product.getName(), productDTO.name(), "Product name does not match");
         assertEquals(product.getDescription(), productDTO.description(), "Product description does not match");
         assertEquals(product.getPrice(), productDTO.price(), "Product price does not match");
+        assertEquals(product.getQuantity(), productDTO.quantity(), "Product quantity does not match");
     }
 }
