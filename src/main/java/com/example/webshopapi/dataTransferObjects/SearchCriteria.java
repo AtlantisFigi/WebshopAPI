@@ -1,4 +1,4 @@
-package com.example.webshopapi.product;
+package com.example.webshopapi.dataTransferObjects;
 
 import java.util.List;
 

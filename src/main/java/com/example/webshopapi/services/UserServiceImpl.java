@@ -1,8 +1,12 @@
-package com.example.webshopapi.user;
+package com.example.webshopapi.services;
 
-import com.example.webshopapi.auth.AuthRequest;
-import com.example.webshopapi.auth.AuthResponse;
-import com.example.webshopapi.auth.JwtTokenService;
+import com.example.webshopapi.dataTransferObjects.AuthRequest;
+import com.example.webshopapi.dataTransferObjects.AuthResponse;
+import com.example.webshopapi.dataTransferObjects.UserRegistrationDTO;
+import com.example.webshopapi.dataTransferObjects.UserResponseDto;
+import com.example.webshopapi.entities.Role;
+import com.example.webshopapi.entities.User;
+import com.example.webshopapi.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

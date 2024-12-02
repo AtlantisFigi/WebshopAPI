@@ -1,5 +1,7 @@
-package com.example.webshopapi.user;
+package com.example.webshopapi.services;
 
+import com.example.webshopapi.entities.Role;
+import com.example.webshopapi.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

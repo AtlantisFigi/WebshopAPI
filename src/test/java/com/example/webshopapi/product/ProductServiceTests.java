@@ -1,6 +1,10 @@
 package com.example.webshopapi.product;
 
+import com.example.webshopapi.dataTransferObjects.ProductDTO;
+import com.example.webshopapi.entities.Product;
 import com.example.webshopapi.exceptions.ProductNotFoundException;
+import com.example.webshopapi.repositories.ProductRepository;
+import com.example.webshopapi.services.ProductServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

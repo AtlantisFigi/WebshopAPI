@@ -1,4 +1,4 @@
-package com.example.webshopapi.auth;
+package com.example.webshopapi.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
