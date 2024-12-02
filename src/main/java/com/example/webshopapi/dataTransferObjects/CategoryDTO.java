@@ -1,6 +1,6 @@
 package com.example.webshopapi.dataTransferObjects;
 
-public record CategoryDTO (
+public record CategoryDTO(
         int id,
         String name
 ){

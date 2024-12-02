@@ -3,7 +3,6 @@ package com.example.webshopapi.services;
 import com.example.webshopapi.dataTransferObjects.ProductDTO;
 import com.example.webshopapi.dataTransferObjects.SearchCriteria;
 import com.example.webshopapi.entities.Category;
-import com.example.webshopapi.entities.Image;
 import com.example.webshopapi.entities.Product;
 import com.example.webshopapi.exceptions.ProductNotFoundException;
 import com.example.webshopapi.repositories.CategoryRepository;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
