@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-const BASE_URL = 'http://localhost:8080/api/auth';
+const BASE_URL = 'http://webshop-api:8080/api/auth';
 
 const users = [
     { firstName: 'John', lastName: 'Doe', prefix: 'van', email: 'john.doe@example.com', password: 'password123' },
