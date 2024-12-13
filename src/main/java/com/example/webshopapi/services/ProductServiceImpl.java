@@ -68,12 +68,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProduct(int id, ProductDTO productDTO) {
-        Product product = productRepository.findById((long) id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        Product product;
 
+        if (id != 0) {
+            // Update logic
+            product = productRepository.findById((long) id)
+                    .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        } else {
+            // Create logic
+            product = new Product();
+        }
+
+        // Vul de productgegevens in
         product.setName(productDTO.name());
         product.setDescription(productDTO.description());
         product.setPrice(productDTO.price());
+        product.setQuantity(productDTO.quantity());
+
+        // Verwerk categorieën
         List<Category> updatedCategories = productDTO.categories().stream()
                 .map(categoryName -> {
                     Category category = categoryRepository.findByName(categoryName);
@@ -86,10 +98,13 @@ public class ProductServiceImpl implements ProductService {
                 })
                 .collect(Collectors.toList());
         product.setCategories(updatedCategories);
-        product.setQuantity(productDTO.quantity());
-        productRepository.save(product);
 
+        // Sla het product op
+        product = productRepository.save(product);
+
+        // Stuur updates via messaging
         ProductDTO updatedProductDTO = convertToProductDTO(product);
+        messagingTemplate.convertAndSend("/topic/product/" + product.getId(), updatedProductDTO);
         messagingTemplate.convertAndSend("/topic/products", updatedProductDTO);
     }
 

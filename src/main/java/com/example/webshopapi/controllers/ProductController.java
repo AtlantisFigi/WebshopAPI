@@ -19,12 +19,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> createProduct(@RequestBody ProductDTO productDTO) {
-        productService.saveProduct(productDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateProduct(@PathVariable int id, @RequestBody ProductDTO productDTO) {
         productService.updateProduct(id, productDTO);

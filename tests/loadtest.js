@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 import SharedArray from 'k6/data';
 
-const BASE_URL = 'http://localhost:8080/api/auth';
+const BASE_URL = 'http://api:8080/api/auth';
 
 const users = [
         { username: 'user1', password: 'password123' },
