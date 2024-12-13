@@ -5,9 +5,9 @@ import SharedArray from 'k6/data';
 const BASE_URL = 'http://api:8080/api/auth';
 
 const users = [
-        { username: 'user1', password: 'password123' },
-        { username: 'user2', password: 'password123' },
-        { username: 'user3', password: 'password123' },
+    { firstName: 'John', lastName: 'Doe', prefix: 'van', email: 'john.doe@example.com', password: 'password123' },
+    { firstName: 'Jane', lastName: 'Smith', prefix: 'de', email: 'jane.smith@example.com', password: 'password123' },
+    { firstName: 'Alice', lastName: 'Johnson', prefix: 'the', email: 'alice.johnson@example.com', password: 'password123' },
 ];
 
 export let options = {
@@ -20,9 +20,11 @@ export default function () {
 
     // REGISTRATION
     let registrationPayload = JSON.stringify({
-        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        prefix: user.prefix,
+        email: user.email,
         password: user.password,
-        email: `${user.username}@example.com`,
     });
 
     let registerResponse = http.post(`${BASE_URL}/register`, registrationPayload, {
@@ -49,7 +51,7 @@ export default function () {
         'is login successful': (r) => r.status === 200,
     });
 
-    let authToken = loginResponse.json().token;
+    let authToken = loginResponse.cookies[0]; // Haal token op uit cookies
 
     // 3. LOGOUT
     let logoutResponse = http.post(
