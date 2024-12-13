@@ -1,8 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
-import SharedArray from 'k6/data';
 
-const BASE_URL = 'http://api:8080/api/auth';
+const BASE_URL = 'http://localhost:8080/api/auth';
 
 const users = [
     { firstName: 'John', lastName: 'Doe', prefix: 'van', email: 'john.doe@example.com', password: 'password123' },
@@ -39,7 +38,7 @@ export default function () {
 
     // LOGIN
     let loginPayload = JSON.stringify({
-        username: user.username,
+        username: user.email,
         password: user.password,
     });
 
@@ -51,7 +50,7 @@ export default function () {
         'is login successful': (r) => r.status === 200,
     });
 
-    let authToken = loginResponse.cookies[0]; // Haal token op uit cookies
+    let authToken = loginResponse.cookies['JWT'];
 
     // 3. LOGOUT
     let logoutResponse = http.post(
